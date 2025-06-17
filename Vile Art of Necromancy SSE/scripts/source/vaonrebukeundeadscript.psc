@@ -41,7 +41,6 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
 
     ; Skip if target is essential
     If akTarget.IsEssential()
-        EndEvent
         Return
     EndIf
 
