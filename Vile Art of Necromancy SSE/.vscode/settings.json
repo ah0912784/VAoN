@@ -1,0 +1,12 @@
+{
+    "papyrus.fallout4.enabled": false,
+    "papyrus.skyrimSpecialEdition.modDirectoryPath": "C:\\Users\\rocke\\AppData\\Roaming\\Vortex\\skyrimse\\mods",
+    "papyrus.skyrim.enabled": false,
+    "mrandersen.papyrus.compiler.flags": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Data\\Source\\Scripts\\TESV_Papyrus_Flags.flg",
+    "mrandersen.papyrus.compiler.sourceDir": "C:\\Users\\rocke\\AppData\\Roaming\\Vortex\\skyrimse\\mods\\Vile Art of Necromancy SSE-92590-2-0-1685583131\\scripts\\source",
+    "mrandersen.papyrus.compiler.projectFile": "C:\\Users\\rocke\\AppData\\Roaming\\Vortex\\skyrimse\\mods\\Vile Art of Necromancy SSE-92590-2-0-1685583131\\skyrimse.ppj",
+    "mrandersen.papyrus.compiler.path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Papyrus Compiler\\PapyrusCompiler.exe",
+    "mrandersen.papyrus.compiler.output": "C:\\Users\\rocke\\AppData\\Roaming\\Vortex\\skyrimse\\mods\\Vile Art of Necromancy SSE-92590-2-0-1685583131\\scripts",
+    "mrandersen.papyrus.compiler.import": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Data\\Source\\Scripts;C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Data\\Scripts\\Source;C:\\Users\\rocke\\AppData\\Roaming\\Vortex\\skyrimse\\mods\\Vile Art of Necromancy SSE-92590-2-0-1685583131\\scripts\\source",
+    "mrandersen.papyrus.compiler.logFile": "C:\\Users\\rocke\\Documents\\My Games\\Skyrim Special Edition\\Logs\\Script\\Papyrus.0.log"
+}
