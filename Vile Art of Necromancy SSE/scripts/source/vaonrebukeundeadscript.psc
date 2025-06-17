@@ -14,6 +14,15 @@ import GlobalVariable
 Message[] Property arRebukeUndeadMessageList  Auto  
 {This array contains all messages created for the Rebuke Undead effect.}
 
+; Declare missing variables
+Actor acActivator
+Actor acTarget
+Int iCasterSoulPotence
+Int iVictimSoulPotence
+Bool bIsFreeWilled
+Bool blPlayerCheater
+Int[] iUnforgivingHeartCount
+
 
 float property fDelay = 0.75 auto
                   {time to wait before Spawning Ash Pile}
@@ -24,12 +33,8 @@ float property fDelayEnd = 1.65 auto
 float property ShaderDuration = 0.00 auto
                   {Duration of Effect Shader.}
 EffectShader property MagicEffectShader auto
-                  {The Effect Shader we want.}
 Bool property bSetAlphaZero = True auto
-                  {The Effect Shader we want.}
 Bool property bSetAlphaToZeroEarly = False Auto
-									{Use this if we want to set the acro to invisible somewhere before the effect shader is done.}
-
 int iPushedButton
 
 int iMenuLevel = 0
@@ -45,25 +50,14 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
     EndIf
 
     ; Calculate Caster Soul Potence
-    iCasterSoulPotence = (
-        acActivator.GetActorValue("magicka") as int +
-        acActivator.GetActorValue("conjuration") as int +
-        acActivator.GetActorValue("speechcraft") as int +
-        acActivator.GetActorValue("dragonsouls") as int +
-        acActivator.GetLevel()
-    )
+    iCasterSoulPotence = acActivator.GetActorValue("magicka") as int + acActivator.GetActorValue("conjuration") as int + acActivator.GetActorValue("speechcraft") as int + acActivator.GetActorValue("dragonsouls") as int + acActivator.GetLevel()
 
     ; Calculate Victim Soul Potence
-    iVictimSoulPotence = (
-        acTarget.GetActorValue("magicka") as int +
-        acTarget.GetActorValue("speechcraft") as int +
-        (
-            acTarget.GetActorValue("aggression") as int +
-            acTarget.GetActorValue("confidence") as int +
-            acTarget.GetActorValue("assistance") as int
-        ) * 10 +
-        acTarget.GetLevel()
-    )
+    int tempAggression = acTarget.GetActorValue("aggression") as int
+    int tempConfidence = acTarget.GetActorValue("confidence") as int
+    int tempAssistance = acTarget.GetActorValue("assistance") as int
+    int tempAggressionSum = (tempAggression + tempConfidence + tempAssistance) * 10
+    iVictimSoulPotence = (acTarget.GetActorValue("magicka") as int) + (acTarget.GetActorValue("speechcraft") as int) + tempAggressionSum + acTarget.GetLevel()
 
     ; Apply randomness
     iCasterSoulPotence += Utility.RandomInt(-20, 20)
@@ -463,7 +457,7 @@ State Destroy
 
 		      endif
 		      if acTarget.GetLeveledActorBase().IsProtected()
-
+    bIsFreeWilled = TRUE
 			        acTarget.GetLeveledActorBase().SetProtected(false)
 
 		      endif
@@ -552,39 +546,23 @@ endState
 State CheckForPunishment
 
   Event OnBeginState()
-
-	int iGodSmileChance = 10 +  (acTarget.GetAV("speechcraft") as int)
-
-	if   	blPlayerCheater == TRUE
-		
-		if RandomInt() > iGodSmileChance
-		
-		  arRebukeUndeadMessageList[23].Show()
-
-		   bIsFreeWilled == TRUE
-	         acTarget.SetPlayerTeammate(false,false)       
-	         acTarget.SetActorValue("confidence", 4)
-	         acTarget.SetActorValue("morality", 0)
-	         acTarget.SetActorValue("assistance", 0)
-		  acTarget.RemoveFromFaction(faMinionState)
-	         acTarget.AddToFaction(faOblivionRevenge)
-		   acTarget.SetActorValue("aggression", 3)
-		   acTarget.StartCombat(Game.GetPlayer())
-		   GotoState("EndRebuke") 
-
-		else
-		   bIsFreeWilled == FALSE
-		   GotoState("EndRebuke")
-                Return
-
-		endif
-
-	else
-		   GotoState("EndRebuke") 
-                Return
-
-	endif
-
+    if blPlayerCheater
+        bIsFreeWilled = TRUE
+        acTarget.SetPlayerTeammate(false, false)
+        acTarget.SetActorValue("confidence", 4)
+        acTarget.SetActorValue("morality", 0)
+        acTarget.SetActorValue("assistance", 0)
+        acTarget.RemoveFromFaction(faMinionState)
+        acTarget.AddToFaction(faOblivionRevenge)
+        acTarget.SetActorValue("aggression", 3)
+        acTarget.StartCombat(Game.GetPlayer())
+        GotoState("EndRebuke")
+        Return
+    else
+        bIsFreeWilled = FALSE
+        GotoState("EndRebuke")
+        Return
+    endif
   EndEvent
 
 endState
@@ -712,7 +690,7 @@ State SetPutrefactionTimer
 
 
   float fPutrefactionTimer
-
+  glPutrefactionTimer.SetValue(960.0)
   fPutrefactionTimer = glPutrefactionTimer.GetValue()
 
   Debug.Notification("Putrefaction Timer currently set to " + fPutrefactionTimer + " RL seconds.")
