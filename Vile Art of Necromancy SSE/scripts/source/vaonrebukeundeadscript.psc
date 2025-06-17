@@ -46,61 +46,72 @@ int iPushedButton
 int iMenuLevel = 0
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
+    ; Assign targets
+    acActivator = akCaster
+    acTarget = akTarget
 
-acActivator = akCaster
+    ; Skip if target is essential
+    If akTarget.IsEssential()
+        EndEvent
+        Return
+    EndIf
 
-acTarget = akTarget
+    ; Calculate Caster Soul Potence
+    iCasterSoulPotence = (
+        acActivator.GetActorValue("magicka") as int +
+        acActivator.GetActorValue("conjuration") as int +
+        acActivator.GetActorValue("speechcraft") as int +
+        acActivator.GetActorValue("dragonsouls") as int +
+        acActivator.GetLevel()
+    )
 
-iCasterSoulPotence = (acActivator.GetActorValue("magicka") as int) + (acActivator.GetActorValue("conjuration") as int) + (acActivator.GetActorValue("speechcraft") as int) + (acActivator.GetActorValue("dragonsouls") as int) + (acActivator.GetLevel())
+    ; Calculate Victim Soul Potence
+    iVictimSoulPotence = (
+        acTarget.GetActorValue("magicka") as int +
+        acTarget.GetActorValue("speechcraft") as int +
+        (
+            acTarget.GetActorValue("aggression") as int +
+            acTarget.GetActorValue("confidence") as int +
+            acTarget.GetActorValue("assistance") as int
+        ) * 10 +
+        acTarget.GetLevel()
+    )
 
-iVictimSoulPotence = (acTarget.GetActorValue("magicka") as int) + (acTarget.GetActorValue("speechcraft") as int) + (((acTarget.GetActorValue("aggression") as int) + (acTarget.GetActorValue("confidence") as int)+ (acTarget.GetActorValue("assistance") as int))*10) + (acTarget.GetLevel())
+    ; Apply randomness
+    iCasterSoulPotence += Utility.RandomInt(-20, 20)
+    iVictimSoulPotence += Utility.RandomInt(-20, 20)
 
-iCasterSoulPotence += Utility.RandomInt(-20, 20)
+    ; Show message box and store result
+    iPushedButton = arRebukeUndeadMessageList[0].Show()
 
-iVictimSoulPotence += Utility.RandomInt(-20, 20)
+    ; Assume target is not free-willed initially
+    bIsFreeWilled = False
 
-iPushedButton = arRebukeUndeadMessageList[0].Show()
-
-bIsFreeWilled = FALSE
-
-if iPushedButton == 0
-
-  GotoState("Subjugate")  
-  Return
-
-elseif iPushedButton == 1
-
-  GotoState("Come")
-  Return
-
-elseif iPushedButton == 2
-
-  GotoState("Equip")
-  Return
-
-elseif iPushedButton == 3
-
-  GotoState("Wait")
-  Return
-
-elseif iPushedButton == 4
-
-  GotoState("Improve")
-  Return
-
-elseif iPushedButton == 5
-
-  GotoState("Destroy")
-  Return
-
-elseif iPushedButton == 6
-
-  GotoState("Configure")
-  Return
-
-endif
-
+    ; Handle button result
+    If iPushedButton == 0
+        GotoState("Subjugate")
+        Return
+    ElseIf iPushedButton == 1
+        GotoState("Come")
+        Return
+    ElseIf iPushedButton == 2
+        GotoState("Equip")
+        Return
+    ElseIf iPushedButton == 3
+        GotoState("Wait")
+        Return
+    ElseIf iPushedButton == 4
+        GotoState("Improve")
+        Return
+    ElseIf iPushedButton == 5
+        GotoState("Destroy")
+        Return
+    ElseIf iPushedButton == 6
+        GotoState("Configure")
+        Return
+    EndIf
 EndEvent
+
 
 State Subjugate
 
