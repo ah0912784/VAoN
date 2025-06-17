@@ -9,10 +9,8 @@
     <Imports>
         <Import>.\Source\Scripts</Import>
         <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Source\Scripts</Import>
-        <Import>C:\Users\rocke\AppData\Roaming\Vortex\skyrimse\mods\Vile Art of Necromancy SSE-92590-2-0-1685583131\scripts\source</Import>
     </Imports>
     <Folders>
         <Folder>.\Source\Scripts</Folder>
-        <Folder>.\scripts\source</Folder>
     </Folders>
 </PapyrusProject>
