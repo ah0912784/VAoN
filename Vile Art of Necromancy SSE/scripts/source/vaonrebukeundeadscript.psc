@@ -2,25 +2,14 @@ Scriptname VAoNRebukeUndeadScript extends activemagiceffect
 {This script manage all effects covered by the rebuke undead menu.}
 
 import message
-
 import actor
-
 import actorbase
-
 import objectreference
-
 import debug
-
 import FormList
-
 import Utility
-
 import Spell
-
 import GlobalVariable
-
-
-
 
 Message[] Property arRebukeUndeadMessageList  Auto  
 {This array contains all messages created for the Rebuke Undead effect.}
