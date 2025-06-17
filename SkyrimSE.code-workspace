@@ -1,0 +1,14 @@
+{
+    // created by vscode papyrus-lang papyrus.skyrimSpecialEdition.generateProject
+    "folders": [
+        {
+            "path": "./Vile Art of Necromancy SSE"
+        }
+    ],
+    "settings": {
+        "papyrus.skyrimSpecialEdition.enabled": true,
+        "papyrus.skyrimSpecialEdition.projectName": "Vile Art of Necromancy SSE",
+        "papyrus.skyrimSpecialEdition.projectPath": "./Vile Art of Necromancy SSE",
+        "papyrus.skyrimSpecialEdition.projectVersion": "2.2.1",
+    }
+}
