@@ -4,7 +4,7 @@
     "mrandersen.papyrus.compiler.projectFile": "C:\\Users\\rocke\\Documents\\Skyrim mods\\VAoN\\Vile Art of Necromancy SSE\\skyrimse.ppj",
     "mrandersen.papyrus.compiler.path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Papyrus Compiler\\PapyrusCompiler.exe",
     "mrandersen.papyrus.compiler.output": "C:\\Users\\rocke\\Documents\\Skyrim mods\\VAoN\\Vile Art of Necromancy SSE\\scripts",
-    "mrandersen.papyrus.compiler.logFile": "C:\\Users\\rocke\\Documents\\My Games\\Skyrim Special Edition\\Logs\\Script\\Papyrus.0.log",
-    "mrandersen.papyrus.compiler.import": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\skse64_2_02_06\\Data\\Scripts\\Source;C:\\Users\\rocke\\Documents\\Skyrim mods\\VAoN\\Vile Art of Necromancy SSE\\scripts\\source",
+    "mrandersen.papyrus.compiler.logFile": "C:\\Users\\Eier\\Documents\\My Games\\Fallout4\\Logs\\Script\\",
+    "mrandersen.papyrus.compiler.import": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyrim Special Edition\\Data\\Source\\Scripts;C:\\Users\\rocke\\Documents\\Skyrim mods\\VAoN\\Vile Art of Necromancy SSE\\scripts\\source",
     "mrandersen.papyrus.compiler.sourceDir": "C:\\Users\\rocke\\Documents\\Skyrim mods\\VAoN\\Vile Art of Necromancy SSE\\scripts\\source",
 }
