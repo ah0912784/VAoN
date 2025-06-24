@@ -60,8 +60,8 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
     if CanSubjugate()
         SubjugateMinion()
 
-    ; else
-    ;     ShowRebukeMenu()
+    else
+        ShowRebukeMenu()
     endif
     
 EndEvent
@@ -81,24 +81,7 @@ Function CalculateSoulPotence()
     iVictimSoulPotence += Utility.RandomInt(-20, 20)
 EndFunction
 
-Function ShowRebukeMenu()
-    int iPushedButton = arRebukeUndeadMessageList[0].Show()
-    if iPushedButton == 0
-        TrySubjugate()
-    elseif iPushedButton == 1
-        TryCommandCome()
-    elseif iPushedButton == 2
-        TryCommandEquip()
-    elseif iPushedButton == 3
-        TryCommandWait()
-    elseif iPushedButton == 4
-        TryImprove()
-    elseif iPushedButton == 5
-        TryDestroy()
-    elseif iPushedButton == 6
-        ShowConfigureMenu()
-    endif
-EndFunction
+
 
 Bool Function CanSubjugate()
     if !acTarget.IsInFaction(faMinionState)
@@ -150,12 +133,12 @@ Function TryCommandWait()
     acTarget.EnableAI(false)
 EndFunction
 
-Function TryImprove(int iImprovementChoice) returns bool
+Bool Function TryImprove() 
     if !(acTarget.IsInFaction(faMinionState))
         Debug.Notification("You cannot improve free willed undead!")
         return false
     endif
-
+    int iImprovementChoice =arRebukeUndeadMessageList[1].Show()
     if iImprovementChoice == 0
         if (acActivator.GetItemCount(arRequiredComponents[0])>=1)
             arRebukeUndeadMessageList[9].Show()
@@ -257,13 +240,13 @@ Function TryImprove(int iImprovementChoice) returns bool
     return false
 EndFunction
 
-Function TryDestroy(int iDestroyChoice) returns bool
+Bool Function TryDestroy()
     if !(acTarget.IsInFaction(faMinionState))
         Debug.Notification("You cannot destroy free willed undead!")
         return false
     endif
-
-    if iDestroyChoice == 0
+    int iDestructionChoice = arRebukeUndeadMessageList[2].Show()
+    if iDestructionChoice == 0
         if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1)
             arRebukeUndeadMessageList[21].Show()
             acTarget.Kill()
@@ -273,7 +256,7 @@ Function TryDestroy(int iDestroyChoice) returns bool
             arRebukeUndeadMessageList[20].Show()
             return false
         endif
-    elseif iDestroyChoice == 1
+    elseif iDestructionChoice == 1
         if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
             arRebukeUndeadMessageList[23].Show()
             acTarget.Disable()
@@ -283,7 +266,7 @@ Function TryDestroy(int iDestroyChoice) returns bool
             arRebukeUndeadMessageList[22].Show()
             return false
         endif
-    elseif iDestroyChoice == 2
+    elseif iDestructionChoice == 2
         if (acActivator.GetItemCount(arRequiredAllergens[2]) >= 1 && acActivator.GetItemCount(arRequiredTools[0]) >= 1)
             arRebukeUndeadMessageList[25].Show()
             acTarget.Delete()
@@ -323,4 +306,21 @@ Bool Function SubjugateMinion()
         return False
     endif
     return True
+EndFunction
+
+Function ShowRebukeMenu()
+    int iPushedButton = arRebukeUndeadMessageList[0].Show()
+    if iPushedButton == 1
+        TryCommandCome()
+    elseif iPushedButton == 2
+        TryCommandEquip()
+    elseif iPushedButton == 3
+        TryCommandWait()
+    elseif iPushedButton == 4
+        TryImprove()
+    elseif iPushedButton == 5
+        TryDestroy()
+    elseif iPushedButton == 6
+        ShowConfigureMenu()
+    endif
 EndFunction
