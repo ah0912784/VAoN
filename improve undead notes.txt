@@ -1,0 +1,6 @@
+Health = Dark Ointment of Meridia ~ None
+Magicka = Whispering Elixir of Azura ~ none
+Stamina = cursed blood on sanguine ~ syringe
+Essence = unforgiving heart of mehrunes dagon ~ embalming tools
+Cruelty = something of namira ~ None
+Akashic memory = Secret Fragrance of hermaeuos mora ~ embalming tools

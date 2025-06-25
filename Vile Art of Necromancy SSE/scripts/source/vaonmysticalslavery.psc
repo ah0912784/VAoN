@@ -2,7 +2,6 @@ Scriptname VAoNMysticalSlavery extends ActiveMagicEffect
 {This script cause a creature to become an undead minion of the caster (if player) and to assume a more aggressive and protective approach than in life.}
 
 import Actor
-
 import ObjectReference
 
 Faction Property faMinionState  Auto  

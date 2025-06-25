@@ -21,6 +21,10 @@ import GlobalVariable
 
 ; Properties
 Message[] Property arRebukeUndeadMessageList  Auto
+Message[] Property improveUndeadMssgList Auto
+Message[] Property destroyUndeadMessageList Auto
+Message[] Property successMessageList Auto
+Message[] Property failureMessageList Auto
 MiscObject[] Property arRequiredComponents  Auto
 MiscObject[] Property arRequiredTools  Auto
 Ingredient[] Property arRequiredAllergens  Auto
@@ -58,6 +62,7 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
         return
     endif
     if CanSubjugate()
+        CalculateSoulPotence()
         SubjugateMinion()
 
     else
@@ -84,11 +89,7 @@ EndFunction
 
 
 Bool Function CanSubjugate()
-    if !acTarget.IsInFaction(faMinionState)
-        Debug.Notification("The undead is already your minion.")
-        return false
-    ElseIf acTarget.IsEssential()
-        Debug.Notification("The undead is essential and cannot be subjugated.")
+    if acTarget.IsInFaction(faMinionState)
         return false
     else
         return true
@@ -138,6 +139,7 @@ Bool Function TryImprove()
         Debug.Notification("You cannot improve free willed undead!")
         return false
     endif
+    ;Needs Dark Ointment of Meridian to improve
     int iImprovementChoice =arRebukeUndeadMessageList[1].Show()
     if iImprovementChoice == 0
         if (acActivator.GetItemCount(arRequiredComponents[0])>=1)
@@ -149,6 +151,7 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[0], 1)
             return true
         else
+            ;TODO replace with failure message list
             arRebukeUndeadMessageList[8].Show()
             return false
         endif
