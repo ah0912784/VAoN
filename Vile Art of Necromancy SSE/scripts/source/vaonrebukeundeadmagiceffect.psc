@@ -115,7 +115,7 @@ Function TryCommandEquip()
         Debug.Notification("You cannot command free willed undead!")
         return
     endif
-    arRebukeUndeadMessageList[6].Show()
+    arRebukeUndeadMessageList[1].Show()
     acTarget.OpenInventory(true)
 EndFunction
 
@@ -124,7 +124,7 @@ Function TryCommandWait()
         Debug.Notification("You cannot command free willed undead!")
         return
     endif
-    arRebukeUndeadMessageList[7].Show()
+    arRebukeUndeadMessageList[3].Show()
     acTarget.SetAv("WaitingForPlayer", 1)
     if (acTarget.HasPerk(prkFollowMe))
         acTarget.RemovePerk(prkFollowMe)
@@ -176,12 +176,12 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[2], 1)
             return true
         else
-            arRebukeUndeadMessageList[5].Show()
+            improveUndeadMssgList[5].Show()
             return false
         endif
     elseif iImprovementChoice == 3
         if (acActivator.GetItemCount(arRequiredComponents[3])>=1)
-            arRebukeUndeadMessageList[8].Show()
+            improveUndeadMssgList[8].Show()
             acTarget.SetAV("aggression", 2)
             acTarget.ModAV("speedmult", 100)
             acTarget.ModAV("weaponspeedmult", 1.20)
@@ -209,7 +209,7 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[4], 1)
             return true
         else
-            arRebukeUndeadMessageList[11].Show()
+            improveUndeadMssgList[11].Show()
             return false
         endif
     elseif iImprovementChoice == 5
@@ -249,25 +249,22 @@ Bool Function TryDestroy()
         return false
     int destructionChoiceIndex = YorN[0].Show()
     if destructionChoiceIndex == 0
-        if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1)
-            destroyUndeadMessageList[1].Show()
+        if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1 && acActivator.GetItemCount(arRequiredTools[5]) >= 1)
+            destroyUndeadMessageList[2].Show()
             acTarget.Kill()
             acActivator.RemoveItem(arRequiredAllergens[0], 1)
             return true
         else
-            destroyUndeadMessageList[2].Show()
+            destroyUndeadMessageList[1].Show()
             return false
         endif
     elseif destructionChoiceIndex == 1
-        if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
-            destroyUndeadMessageList[3].Show()
-            acTarget.Disable()
-            acActivator.RemoveItem(arRequiredAllergens[1], 1)
+        ; if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
+            destroyUndeadMessageList[0].Show()
+        ;     acTarget.Disable()
+        ;     acActivator.RemoveItem(arRequiredAllergens[1], 1)
             return true
-        else
-            destroyUndeadMessageList[4].Show()
-            return false
-        endif
+        
     EndIf
     endif
     return false
@@ -275,7 +272,7 @@ EndFunction
 
 
 Function ShowConfigureMenu()
-    arRebukeUndeadMessageList[25].Show()
+    arRebukeUndeadMessageList[4].Show()
     Debug.Notification("Configure menu logic not implemented in this refactor.")
 EndFunction
 
