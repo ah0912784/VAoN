@@ -23,8 +23,7 @@ import GlobalVariable
 Message[] Property arRebukeUndeadMessageList  Auto
 Message[] Property improveUndeadMssgList Auto
 Message[] Property destroyUndeadMessageList Auto
-Message[] Property successMessageList Auto
-Message[] Property failureMessageList Auto
+Message[] Property YorN Auto
 MiscObject[] Property arRequiredComponents  Auto
 MiscObject[] Property arRequiredTools  Auto
 Ingredient[] Property arRequiredAllergens  Auto
@@ -140,10 +139,10 @@ Bool Function TryImprove()
         return false
     endif
     ;Needs Dark Ointment of Meridian to improve
-    int iImprovementChoice =arRebukeUndeadMessageList[1].Show()
+    int iImprovementChoice =improveUndeadMssgList[0].Show()
     if iImprovementChoice == 0
         if (acActivator.GetItemCount(arRequiredComponents[0])>=1)
-            arRebukeUndeadMessageList[9].Show()
+            improveUndeadMssgList[2].Show()
             acTarget.ModAV("health", 100)
             acTarget.ModAV("healrate", 5)
             acTarget.ModAV("combathealthregenmult", 0.20)
@@ -152,24 +151,24 @@ Bool Function TryImprove()
             return true
         else
             ;TODO replace with failure message list
-            arRebukeUndeadMessageList[8].Show()
+            improveUndeadMssgList[1].Show()
             return false
         endif
     elseif iImprovementChoice == 1
         if (acActivator.GetItemCount(arRequiredComponents[1])>=1)
-            arRebukeUndeadMessageList[11].Show()
+            improveUndeadMssgList[4].Show()
             acTarget.ModAV("magicka", 100)
             acTarget.ModAV("magickarate", 5)
             acTarget.ModAV("magickaratemult", 100)
             acActivator.RemoveItem(arRequiredComponents[1], 1)
             return true
         else
-            arRebukeUndeadMessageList[10].Show()
+            improveUndeadMssgList[3].Show()
             return false
         endif
     elseif iImprovementChoice == 2
         if (acActivator.GetItemCount(arRequiredComponents[2])>=1  && acActivator.GetItemCount(arRequiredTools[0])>=1)
-            arRebukeUndeadMessageList[13].Show()
+            improveUndeadMssgList[6].Show()
             acTarget.ModAV("stamina", 100)
             acTarget.ModAV("staminarate", 5)
             acTarget.ModAV("carryweight", 100)
@@ -177,12 +176,12 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[2], 1)
             return true
         else
-            arRebukeUndeadMessageList[12].Show()
+            arRebukeUndeadMessageList[5].Show()
             return false
         endif
     elseif iImprovementChoice == 3
         if (acActivator.GetItemCount(arRequiredComponents[3])>=1)
-            arRebukeUndeadMessageList[15].Show()
+            arRebukeUndeadMessageList[8].Show()
             acTarget.SetAV("aggression", 2)
             acTarget.ModAV("speedmult", 100)
             acTarget.ModAV("weaponspeedmult", 1.20)
@@ -193,12 +192,12 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[3], 1)
             return true
         else
-            arRebukeUndeadMessageList[14].Show()
+            improveUndeadMssgList[7].Show()
             return false
         endif
     elseif iImprovementChoice == 4
         if ((acActivator.GetItemCount(arRequiredComponents[4])>=1) && acActivator.GetItemCount(arRequiredTools[1])>=1 && acActivator.GetItemCount(arRequiredTools[2])>=1 && acActivator.GetItemCount(arRequiredTools[3])>=1 && acActivator.GetItemCount(arRequiredTools[4])>=1)
-            arRebukeUndeadMessageList[17].Show()
+            improveUndeadMssgList[10].Show()
             acTarget.SetAV("assistance", 2)
             acTarget.ModAV("detectliferange", 100)
             acTarget.ModAV("onehanded", 25)
@@ -210,7 +209,7 @@ Bool Function TryImprove()
             acActivator.RemoveItem(arRequiredComponents[4], 1)
             return true
         else
-            arRebukeUndeadMessageList[16].Show()
+            arRebukeUndeadMessageList[11].Show()
             return false
         endif
     elseif iImprovementChoice == 5
@@ -224,7 +223,7 @@ Bool Function TryImprove()
                 acActivator.RemoveItem(arRequiredComponents[6], 1)
                 blPlayerCheater = TRUE
             endif
-            arRebukeUndeadMessageList[19].Show()
+            improveUndeadMssgList[12].Show()
             acTarget.GetLeveledActorBase().SetProtected(true)
             acTarget.ModAV("mass", 0.2)
             acTarget.ModAV("damageresist", 20)
@@ -236,7 +235,7 @@ Bool Function TryImprove()
             ; Optionally call CheckForPunishment() here if needed
             return true
         else
-            arRebukeUndeadMessageList[18].Show()
+            arRebukeUndeadMessageList[13].Show()
             return false
         endif
     endif
@@ -248,38 +247,27 @@ Bool Function TryDestroy()
         Debug.Notification("You cannot destroy free willed undead!")
         return false
     endif
-    int iDestructionChoice = arRebukeUndeadMessageList[2].Show()
+    int iDestructionChoice = YorN[0].Show()
     if iDestructionChoice == 0
         if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1)
-            arRebukeUndeadMessageList[21].Show()
+            destroyUndeadMessageList[1].Show()
             acTarget.Kill()
             acActivator.RemoveItem(arRequiredAllergens[0], 1)
             return true
         else
-            arRebukeUndeadMessageList[20].Show()
+            destroyUndeadMessageList[2].Show()
             return false
         endif
     elseif iDestructionChoice == 1
         if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
-            arRebukeUndeadMessageList[23].Show()
+            destroyUndeadMessageList[3].Show()
             acTarget.Disable()
             acActivator.RemoveItem(arRequiredAllergens[1], 1)
             return true
         else
-            arRebukeUndeadMessageList[22].Show()
+            destroyUndeadMessageList[4].Show()
             return false
         endif
-    elseif iDestructionChoice == 2
-        if (acActivator.GetItemCount(arRequiredAllergens[2]) >= 1 && acActivator.GetItemCount(arRequiredTools[0]) >= 1)
-            arRebukeUndeadMessageList[25].Show()
-            acTarget.Delete()
-            acActivator.RemoveItem(arRequiredAllergens[2], 1)
-            return true
-        else
-            arRebukeUndeadMessageList[24].Show()
-            return false
-        endif
-    endif
     return false
 EndFunction
 
