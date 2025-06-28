@@ -239,16 +239,16 @@ Bool Function TryImprove()
             return false
         endif
     endif
+    ; Fallback: return false if no valid improvement choice was made
     return false
 EndFunction
 
 Bool Function TryDestroy()
-    if !(acTarget.IsInFaction(faMinionState))
+    if !acTarget.IsInFaction(faMinionState)
         Debug.Notification("You cannot destroy free willed undead!")
         return false
-    endif
-    int iDestructionChoice = YorN[0].Show()
-    if iDestructionChoice == 0
+    int destructionChoiceIndex = YorN[0].Show()
+    if destructionChoiceIndex == 0
         if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1)
             destroyUndeadMessageList[1].Show()
             acTarget.Kill()
@@ -258,7 +258,7 @@ Bool Function TryDestroy()
             destroyUndeadMessageList[2].Show()
             return false
         endif
-    elseif iDestructionChoice == 1
+    elseif destructionChoiceIndex == 1
         if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
             destroyUndeadMessageList[3].Show()
             acTarget.Disable()
@@ -268,6 +268,8 @@ Bool Function TryDestroy()
             destroyUndeadMessageList[4].Show()
             return false
         endif
+    EndIf
+    endif
     return false
 EndFunction
 
