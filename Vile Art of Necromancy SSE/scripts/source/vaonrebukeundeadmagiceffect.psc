@@ -243,31 +243,28 @@ Bool Function TryImprove()
     return false
 EndFunction
 
-Bool Function TryDestroy()
+Function TryDestroy()
+    int destructionChoiceIndex = YorN[0].Show()
+    Debug.Notification("Attempting to destroy undead.")
     if !acTarget.IsInFaction(faMinionState)
         Debug.Notification("You cannot destroy free willed undead!")
-        return false
-    int destructionChoiceIndex = YorN[0].Show()
-    if destructionChoiceIndex == 0
+        return
+    elseif destructionChoiceIndex == 0
         if (acActivator.GetItemCount(arRequiredAllergens[0]) >= 1 && acActivator.GetItemCount(arRequiredTools[5]) >= 1)
+            Debug.Notification("Destroying undead with fire.")
             destroyUndeadMessageList[2].Show()
             acTarget.Kill()
             acActivator.RemoveItem(arRequiredAllergens[0], 1)
-            return true
         else
+            Debug.Notification("You do not have the required items to destroy the undead.")
             destroyUndeadMessageList[1].Show()
-            return false
         endif
-    elseif destructionChoiceIndex == 1
+    else
         ; if (acActivator.GetItemCount(arRequiredAllergens[1]) >= 1)
             destroyUndeadMessageList[0].Show()
         ;     acTarget.Disable()
         ;     acActivator.RemoveItem(arRequiredAllergens[1], 1)
-            return true
-        
-    EndIf
     endif
-    return false
 EndFunction
 
 
@@ -303,7 +300,7 @@ Function ShowRebukeMenu()
     if iPushedButton == 0
         Debug.Notification("No option selected, exiting menu.")
         return
-    if iPushedButton == 1
+    elseif iPushedButton == 1
         TryCommandCome()
     elseif iPushedButton == 2
         TryCommandEquip()
