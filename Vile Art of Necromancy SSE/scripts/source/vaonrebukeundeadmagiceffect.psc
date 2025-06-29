@@ -142,7 +142,7 @@ Bool Function TryImprove()
     int iImprovementChoice =improveUndeadMssgList[0].Show()
     if iImprovementChoice == 0
         if (acActivator.GetItemCount(arRequiredComponents[0])>=1)
-            improveUndeadMssgList[2].Show()
+            improveUndeadMssgList[1].Show()
             acTarget.ModAV("health", 100)
             acTarget.ModAV("healrate", 5)
             acTarget.ModAV("combathealthregenmult", 0.20)
@@ -151,7 +151,7 @@ Bool Function TryImprove()
             return true
         else
             ;TODO replace with failure message list
-            improveUndeadMssgList[1].Show()
+            improveUndeadMssgList[2].Show()
             return false
         endif
     elseif iImprovementChoice == 1
@@ -223,7 +223,7 @@ Bool Function TryImprove()
                 acActivator.RemoveItem(arRequiredComponents[6], 1)
                 blPlayerCheater = TRUE
             endif
-            improveUndeadMssgList[12].Show()
+            improveUndeadMssgList[14].Show()
             acTarget.GetLeveledActorBase().SetProtected(true)
             acTarget.ModAV("mass", 0.2)
             acTarget.ModAV("damageresist", 20)
@@ -300,6 +300,9 @@ EndFunction
 
 Function ShowRebukeMenu()
     int iPushedButton = arRebukeUndeadMessageList[0].Show()
+    if iPushedButton == 0
+        Debug.Notification("No option selected, exiting menu.")
+        return
     if iPushedButton == 1
         TryCommandCome()
     elseif iPushedButton == 2
