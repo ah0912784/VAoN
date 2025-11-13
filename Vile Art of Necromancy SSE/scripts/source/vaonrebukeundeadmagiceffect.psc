@@ -26,6 +26,7 @@ Message[] Property destroyUndeadMessageList Auto
 Message[] Property YorN Auto
 MiscObject[] Property arRequiredComponents  Auto
 MiscObject[] Property arRequiredTools  Auto
+Quest Property qstRebukeUndead  Auto
 Ingredient[] Property arRequiredAllergens  Auto
 ImpactDataSet Property idImmolationEffect  Auto
 Spell Property spImmortalVisualEffect  Auto
@@ -100,7 +101,7 @@ Function TryCommandCome()
         Debug.Notification("You cannot command free willed undead!")
         return
     endif
-    arRebukeUndeadMessageList[5].Show()
+    arRebukeUndeadMessageList[2].Show()
     acTarget.SetAv("WaitingForPlayer", 0)
     if (acTarget.HasPerk(prkWait))
         acTarget.RemovePerk(prkWait)
@@ -285,7 +286,7 @@ Bool Function SubjugateMinion()
         acTarget.SetActorValue("morality", 0)
         acTarget.SetActorValue("assistance", 1)
         acTarget.AddToFaction(faMinionState)
-        acTarget.SetPlayerTeammate(true,true)
+        
     else
         arRebukeUndeadMessageList[3].Show()
         bIsFreeWilled = TRUE

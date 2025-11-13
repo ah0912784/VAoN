@@ -88,11 +88,7 @@ While i < n
    i = i + 1
 EndWhile
 
-akTarget.AddItem(arEdibleBodyParts[0],1,false) ;Heart
-akTarget.AddItem(arEdibleBodyParts[1],iHarvestedMeat,false) ;Flesh
-akTarget.addItem(arEdibleBodyParts[2], 2, false) ;Eyes
-akTarget.AddItem(arEdibleBodyParts[3], iHarvestedFat,false)
-akTarget.AddItem(arEdibleSubstance[0], iHarvestedBlood, false)
+addMiscBodyPart(true, akTarget, arEdibleBodyParts,arEdibleSubstance, iHarvestedBlood, iHarvestedFat, iHarvestedMeat)
 
 
 ; orVictimAshpile.addItem(arEdibleBodyParts[0], 1, true)
@@ -122,27 +118,17 @@ akTarget.AddItem(arEdibleSubstance[0], iHarvestedBlood, false)
 
 if (iDissectionOption == 0)
 
-akCaster.DropObject(arCorpseMiscBodyParts[0], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[1], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[2], 2)
-akCaster.DropObject(arCorpseMiscBodyParts[3], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[4], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[5], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[6], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[7], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[8], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[9], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[10], 1)
-akCaster.DropObject(arCorpseMiscBodyParts[11], 1)
-akCaster.DropObject(arEdibleBodyParts[0], 1)
-akCaster.DropObject(arEdibleBodyParts[1], iHarvestedMeat)
-akCaster.DropObject(arEdibleBodyParts[2], 2)
-akCaster.DropObject(arEdibleBodyParts[3], iHarvestedFat)
-akCaster.DropObject(arEdibleSubstance[0], iHarvestedBlood)
+
+   While i < n
+      akTarget.DropObject(arCorpseMiscBodyParts[i], 1)
+      i = i + 1
+   EndWhile
+   addMiscBodyPart(false, akTarget, arEdibleBodyParts,arEdibleSubstance, iHarvestedBlood, iHarvestedFat, iHarvestedMeat)
+
 
 else
 
-Debug.Notification("All the dissected bodyparts were moved to your backpack...")
+Debug.Notification("The dissection is complete; now gather what you need from what remain of the corpse.")
 
 endif
 
@@ -167,3 +153,18 @@ endEvent
 endState
 
 
+Function addMiscBodyPart(bool add, Actor akTarget, Ingredient[] arEdibleBodyParts, Potion[] arEdibleSubstance, int iHarvestedBlood, int iHarvestedFat, int iHarvestedMeat)
+   if add
+      akTarget.AddItem(arEdibleBodyParts[0],1,false) ;Heart
+      akTarget.AddItem(arEdibleBodyParts[1],iHarvestedMeat,false) ;Flesh
+      akTarget.addItem(arEdibleBodyParts[2], 2, false) ;Eyes
+      akTarget.AddItem(arEdibleBodyParts[3], iHarvestedFat,false)
+      akTarget.AddItem(arEdibleSubstance[0], iHarvestedBlood, false)
+   else
+      akTarget.DropObject(arEdibleBodyParts[0],1) ;Heart
+      akTarget.DropObject(arEdibleBodyParts[1],iHarvestedMeat) ;Flesh
+      akTarget.DropObject(arEdibleBodyParts[2],2) ;Eyes
+      akTarget.DropObject(arEdibleBodyParts[3],iHarvestedFat)
+      akTarget.DropObject(arEdibleSubstance[0],iHarvestedBlood)
+   endif
+EndFunction
